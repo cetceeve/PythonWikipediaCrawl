@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 start_url = "https://en.wikipedia.org/wiki/Special:Random"
 target_url = "https://en.wikipedia.org/wiki/Greek_language"
 
+
 def continue_crawl(search_history, target_url, max_steps=25):
     if search_history[-1] == target_url:
         print("We've found the target article!")
@@ -19,6 +20,7 @@ def continue_crawl(search_history, target_url, max_steps=25):
         return False
     else:
         return True
+
 
 def find_first_link(url):
     # return the first link as a string, or return None if there is no link
@@ -42,7 +44,7 @@ def find_first_link(url):
         print("Searching for article link...")
         if element.find("a", recursive=False):
             article_link = element.find("a", recursive=False).get('href')
-            #print("Found article Link")
+            # print("Found article Link")
             break
     # return the first link as a string, or return None if there is no links
     if not article_link:
@@ -51,6 +53,7 @@ def find_first_link(url):
     # Build a full url from the relative article_link url
     first_link = urllib.parse.urljoin('https://en.wikipedia.org/', article_link)
     return first_link
+
 
 article_chain = [start_url]
 while continue_crawl(article_chain, target_url):
@@ -65,4 +68,4 @@ while continue_crawl(article_chain, target_url):
     # add the first link to article_chain
     article_chain.append(first_link)
     # delay for about two seconds
-    time.sleep(2) # Slow things down so as to not hammer Wikipedia's servers
+    time.sleep(2)  # Slow things down so as to not hammer Wikipedia's servers
